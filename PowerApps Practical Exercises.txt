@@ -1,0 +1,113 @@
+**PowerApps Practical Exercises**
+
+## Practical 2 - Excel with Form
+### Edit Form
+- **Button Actions:**
+  - **Submit:** `SubmitForm(Form1)`
+  - **Reset:** `ResetForm(Form1)`
+
+- **Navigation:**
+  - **Back Arrow:** `Navigate(BackScreen)`
+  - **Plus Sign:** `Navigate(UserScreen)`
+
+---
+
+## Practical 3 - SharePoint Sort/Filter
+### Gallery Filtering and Searching
+- **Search Functionality:**  
+  `Search('S-users', TextInput1.Text, Title)`
+- **Filter Functionality:**  
+  `Filter('S-users', StartsWith(username, TextInput2.Text))`
+
+---
+
+## Practical 4 - Login to SharePoint
+### Login Form Logic
+```
+If(!IsBlank(LookUp(KinP_Log, UserName = TextInput1.Text && Password = TextInput2.Text).UserName),
+   Navigate(Screen2),
+   Notify("Invalid Login", NotificationType.Error)
+)
+```
+
+---
+
+## Practical 5/6 - Validations in EditForm
+### Icon Color Logic
+`If(Self.Icon = Icon.Check, Color.Green, Color.Red)`
+
+### Field Validations
+#### Field-Specific Validation Icons
+- **Title, Name, Employee ID:**  
+  `If(!IsBlank(Title_DataCard1), Icon.Check, Icon.Cancel)`
+- **Age Validation:**  
+  `If(Value(DataCardValue4.Text) >= 21, Icon.Check, Icon.Cancel)`
+- **Email Validation:**  
+  `If(IsMatch(DataCardValue5.Text, Match.Email), Icon.Check, Icon.Cancel)`
+- **Mobile/Phone Number (10 Digits):**  
+  `If(IsMatch(DataCardValue7.Text, Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit), Icon.Check, Icon.Cancel)`
+- **Zip Code (6 Digits):**  
+  `If(IsMatch(DataCardValue7.Text, Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit), Icon.Check, Icon.Cancel)`
+- **Password Validation:**  
+  `If(IsMatch(DataCardValue8.Text, "^(?=[^\d_].*?\d)\w(\w|[!@#$%]){7,20}$"), Icon.Check, Icon.Lock)`
+- **Date Validation:**  
+  `If(Weekday(DataCardValue9.SelectedDate, StartOfWeek.Monday) <= 5 And DataCardValue9.SelectedDate > Today(), Icon.Check, Icon.Cancel)`
+
+### Tooltip Messages
+- **Title, Name, Employee ID:**  
+  `If(!IsBlank(Title_DataCard1), "", "The field cannot be blank")`
+- **Age:**  
+  `If(Value(DataCardValue4.Text) >= 21, "", "Age must be >=21")`
+- **Email:**  
+  `If(IsMatch(DataCardValue5.Text, Match.Email), "", "The email should be in format example@example.com")`
+- **Mobile/Phone Number:**  
+  `If(IsMatch(DataCardValue5.Text, Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit & Match.Digit), "", "The mobile number must be 10 digits")`
+- **Password:**  
+  `If(IsMatch(DataCardValue8.Text, "^(?=[^\d_].*?\d)\w(\w|[!@#$%]){7,20}$"), "", "Password does not comply")`
+- **Date:**  
+  `If(Weekday(DataCardValue9.SelectedDate, StartOfWeek.Monday) > 5, "Choose a day from Monday to Friday", DataCardValue9.SelectedDate <= Today(), "Must choose a date in the future", "No date was selected")`
+
+---
+
+## Practical 7 - Data Collection & Computation
+### Creating a Collection
+```
+ClearCollect(
+   colRevenue,
+   { Year: "2019", USA: 47540, UK: 34530, India: 32500 },
+   { Year: "2020", USA: 48900, UK: 39050, India: 34000 },
+   { Year: "2021", USA: 50200, UK: 41080, India: 35000 },
+   { Year: "2022", USA: 52500, UK: 43500, India: 37800 },
+   { Year: "2023", USA: 54750, UK: 42500, India: 37500 }
+)
+```
+
+### Adding Columns
+```
+AddColumns(
+   AddColumns(colRevenue, "Total Revenue", India + UK + USA),
+   "Label", Concatenate(Year, "(", 'Total Revenue', ")")
+)
+```
+
+---
+
+## Practical 9 - Download Functionality (Vertical Gallery)
+### Text Property for File Title
+```
+ThisItem.'File name with extension'
+```
+
+### Image Source Based on File Extension
+```
+$"https://static2.sharepointonline.com/files/fabric/assets/item-types/24/{Last(Split(ThisItem.'File name with extension', ".")).Value}.svg"
+```
+
+### Download Button (Next Arrow)
+```
+Download($"https://kccollegeeduin.sharepoint.com/sites/fatima1/_layouts/15/download.aspx?SourceUrl=" & ThisItem.'Full Path')
+
+
+Download($"https://kccollegeeduin.sharepoint.com/sites/RRINTERNATIONAL/_layouts/15/download.aspx?SourceUrl="&ThisItem.'Full Path')
+```
+

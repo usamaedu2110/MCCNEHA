@@ -1,0 +1,60 @@
+"https://quickchart.io/charts?c="&EncodeUrl("{
+  'type': 'horizontalBar',
+  'data': {
+    'labels': [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July'
+    ],
+    'datasets': [
+      {
+        'label': 'Dataset 1',
+        'backgroundColor': 'rgba(255, 99, 132, 0.5)',
+        'borderColor': 'rgb(255, 99, 132)',
+        'borderWidth': 1,
+        'data': [
+          -32,
+          62,
+          64,
+          41,
+          -31,
+          -32,
+          87
+        ]
+      },
+      {
+        'label': 'Dataset 2',
+        'backgroundColor': 'rgba(54, 162, 235, 0.5)',
+        'borderColor': 'rgb(54, 162, 235)',
+        'data': [
+          9,
+          -100,
+          -13,
+          64,
+          -57,
+          26,
+          20
+        ]
+      }
+    ]
+  },
+  'options': {
+    'elements': {
+      'rectangle': {
+        'borderWidth': 2
+      }
+    },
+    'responsive': true,
+    'legend': {
+      'position': 'right'
+    },
+    'title': {
+      'display': true,
+      'text': 'Chart.js Horizontal Bar Chart'
+    }
+  }
+}")
